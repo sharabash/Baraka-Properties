@@ -1,0 +1,32 @@
+% my $building = $stash->{building};
+<span class="sep">/</span><h3 class="head">pictures</h3>
+<p class="clear"></p>
+<form id="pictures" method="post" enctype="multipart/form-data" accept-charset="UTF-8" action="<% $c->request->uri %>">
+	<table class="pictures">
+		<tr>
+			<th><label class="big">Upload new picture</label></th>
+			<td>
+				<ul class="upload">
+					<li><input type="file" name="picture"/></li>
+					<li><input type="submit" value="Upload"/></li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="space"></td>
+		</tr>
+%	my $i = 0;
+%	while (my $picture = $stash->{pictures}->next) {
+		<tr class="picture<% ($i%2 == 1)? ' highlight' : '' %>">
+			<th><label class="big"><% $picture->filename %></label></th>
+			<td>
+				<ul class="inline">
+					<li><a href="/picture/<% $picture->filename %>?width=640" rel="pphoto"><strong>Preview Picture</strong></a></li>
+					<li style="float: right;"><strong><a  href="<% $c->request->uri %>" name="_admin_building_<% $building->building_id %>_pictures_<% $picture->picture_id %>_delete" onclick="return false;" class="delete picture">Delete Picture</a></strong></li>
+				</ul>
+			</td>
+		</tr>
+%		$i++;
+%	}
+	</table>
+</form>

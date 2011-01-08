@@ -1,0 +1,17 @@
+#pictures th { min-width: 180px; padding-right: 20px; text-align: right; vertical-align: top; }
+#pictures input[type=submit] { width: 162px; }
+#pictures ul.upload li { padding-bottom: 3px; }
+#pictures label.big { font-weight: bold; font-size: 124%; }
+#pictures ul.inline { display: inline-block; }
+#pictures ul.inline li { display: inline-block; padding: 0 16px 0 6px; font-size: 110%; }
+#pictures tr.picture > th, tr.picture > td { padding-top: 10px; vertical-align: middle; }
+#pictures label.big { display: inline-block; }
+#pictures td.space { padding: 6px; }
+#pictures table { width: 100%; }
+#pictures td { width: 90%; }
+#pictures ul { width: 100%; }
+#pictures tr.picture { background-color: #EFEFEF; }
+#pictures tr.picture td,
+#pictures tr.picture th { padding-top: 10px !important; padding-bottom: 8px !important; }
+#pictures tr.picture td { }
+#pictures tr.picture.highlight { background-color: #FEFEFE; }

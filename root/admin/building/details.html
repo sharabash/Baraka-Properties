@@ -1,0 +1,118 @@
+% my $building = $stash->{building};
+<span class="sep">/</span><h3 class="head">details</h3>
+<p class="clear"></p>
+<form id="details" method="post" action="<% $c->request->uri %>">
+	<input type="hidden" name="latitude_longitude" id="latitude_longitude" value="<% $building->latitude_longitude %>"/>
+	<table>
+		<tr>
+			<th>Address:</th>
+			<td>
+				<input type="text" name="full_address" id="full_address" value="<% $building->full_address %>"/>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td class="map"><div id="map"></div></td>
+		</tr>
+		<tr>
+			<th><span>Area:</span></th>
+			<td>
+				<ul>
+					<li>
+						<input type="checkbox" name="school_area"<% $building->school_area? ' checked="checked"' : '' %>/>
+						<label for="school_area">Schools / K-12</label>
+					</li>
+					<li>
+						<input type="checkbox" name="bus_area"<% $building->bus_area? ' checked="checked"' : '' %>/>
+						<label for="bus_area">Bus Route</label>
+					</li>
+					<li>
+						<input type="checkbox" name="campus_area"<% $building->campus_area? ' checked="checked"' : '' %>/>
+						<label for="campus_area">Campus</label>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th><span>Has:</span></th>
+			<td>
+				<ul>
+					<li>
+						<input type="checkbox" name="washer_dryer"<% $building->washer_dryer? ' checked="checked"' : '' %>/>
+						<label for="washer_dryer">Washer and dryer</label>
+					</li>
+					<li>
+						<input type="checkbox" name="basement"<% $building->basement? ' checked="checked"' : '' %>/>
+						<label for="basement">Basement</label>
+					</li>
+					<li>
+						<input type="checkbox" name="garage"<% $building->garage? ' checked="checked"' : '' %>/>
+						<label for="garage">Garage</label>
+					</li>
+					<li>
+						<input type="checkbox" name="yard"<% $building->yard? ' checked="checked"' : '' %>/>
+						<label for="yard">Yard</label>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>Description:</th>
+			<td>
+				<textarea name="description" rows="5" cols="78"><% $building->description %></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><input type="submit" value="Update"/></td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=ABQIAAAApwGJ1Tx1119kBDIyVW_iTxR0_J8nKKSWpcIFeRyEOxssMGjqDRSZ-h_Bdt64Mp_DiMm1Gu3IRocB9Q"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAApwGJ1Tx1119kBDIyVW_iTxR0_J8nKKSWpcIFeRyEOxssMGjqDRSZ-h_Bdt64Mp_DiMm1Gu3IRocB9Q"></script>
+<script type="text/javascript">
+	$(function() {
+		var coordinates = new google.maps.LatLng(<% $building->latitude_longitude? $building->latitude_longitude : '40.11642,-88.243383' %>);
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 17,
+			center: coordinates,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+		var marker = new google.maps.Marker({
+			map: map,
+			position: coordinates
+		});
+		var geocoder = new google.maps.Geocoder();
+%	if (!$building->latitude_longitude) {
+		geocoder.geocode({ address: "<% $building->full_address? $building->full_address : $building->name .' Champaign IL' %>" }, function(result, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				var full_address = result[0].formatted_address;
+				var latitude_longitude = result[0].geometry.location.lat() +','+ result[0].geometry.location.lng();
+				$('#full_address').val(full_address);
+				$('#latitude_longitude').val(latitude_longitude);
+				coordinates = result[0].geometry.location;
+				map.setCenter(coordinates);
+				marker.setPosition(coordinates);
+			}
+		});
+%	}
+		$('#full_address').change(function() {
+			var val = $(this).val();
+			if (!val.match(/Urbana/) && !val.match(/Champaign/)) {
+				val += ' Champaign IL';
+			}
+			geocoder.geocode({ address: val }, function(result, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					var full_address = result[0].formatted_address;
+					var latitude_longitude = result[0].geometry.location.lat() +','+ result[0].geometry.location.lng();
+					$('#full_address').val(full_address);
+					$('#latitude_longitude').val(latitude_longitude);
+					coordinates = result[0].geometry.location;
+					map.setCenter(coordinates);
+					marker.setPosition(coordinates);
+				}
+			});
+		});
+	});
+</script>
+

@@ -1,0 +1,406 @@
+<div id="nowleasing">
+	<h1>Now Leasing</h1>
+	<h2><% $stash->{todays_date} %></h2>
+	<p class="clear"></p>
+	<form id="filters" action="/" method="get">
+		<fieldset>
+			<legend>Filters / Search Available</legend>
+			<table>
+				<tbody>
+					<tr class="main">
+						<td class="label first">Rent / Price Range:</td>
+						<td class="main-col expand-col">
+							<table>
+								<tbody>
+									<tr>
+										<td class="option text">
+											<label for="rent_min" style="font-weight: bold;">$</label>
+											<span class="input rent min"><input maxlength="4" class="rent min" type="text" name="rent_min" id="rent_min"<% ($params->{rent_min} && $params->{rent_min} =~ /^[\d.]+$/)? ' value="'. $params->{rent_min} .'"' : '' %>/></span>
+											<span class="to" style="font-style: oblique; font-weight: bold;">to</span>
+											<label for="rent_max" style="font-weight: bold;">$</label>
+											<span class="input rent max"><input maxlength="4" class="rent max" type="text" name="rent_max" id="rent_max"<% ($params->{rent_max} && $params->{rent_max} =~ /^[\d.]+$/)? ' value="'. $params->{rent_max} .'"' : '' %>/></span>
+										</td>
+										<td class="space-section-col expand-col"></td>
+										<td class="label">Min Bedrooms:</td>
+										<td class="option select">
+											<span class="input">
+												<select name="bedrooms" id="bedrooms">
+													<option value="">-</option>
+%													for (my $i = 1; $i <= $stash->{max_bedrooms}; $i++) {
+													<option value="<% $i %>"<% ($params->{bedrooms} && $params->{bedrooms} == $i)? ' selected="selected"' : '' %>><% $i %></option>
+%													}
+												</select>
+											</span>
+										</td>
+										<td class="space-option-col"></td>
+										<td class="label">Min Bathrooms:</td>
+										<td class="option select">
+											<span class="input">
+												<select name="bathrooms" id="bathrooms">
+													<option value="">-</option>
+%													for (my $i = 1; $i <= $stash->{max_bathrooms}; $i++) {
+													<option value="<% $i %>"<% ($params->{bathrooms} && $params->{bathrooms} == $i)? ' selected="selected"' : '' %>><% $i %></option>
+%													}
+												</select>
+											</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td class="last-col">
+							<input type="hidden" name="more-options-hidden" id="more-options-hidden" value="<% ($params->{'more-options-hidden'} && $params->{'more-options-hidden'} eq 'expanded')? 'expanded' : 'collapsed' %>"/>
+							<div class="more-options <% ($params->{'more-options-hidden'} && $params->{'more-options-hidden'} eq 'expanded')? 'expanded' : 'collapsed' %>" id="more-options-trigger"><span class="icon"></span><span class="text">More Options</span></div>
+						</td>
+					</tr>
+					<tr class="more-options" id="more-options-section"<% ($params->{'more-options-hidden'} && $params->{'more-options-hidden'} eq 'expanded')? '' : ' style="display: none;"' %>>
+						<td class="label first">Additional Filters:</td>
+						<td class="main-col expand-col" colspan="2">
+							<table>
+								<tbody>
+									<tr>
+										<td class="label">Available:</td>
+										<td>
+											<table>
+												<tbody>
+													<tr>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="available" value="fall" id="available_fall"<% ($params->{available} && $params->{available} eq 'fall')? ' checked="checked"' : '' %>/></span>
+															<label for="available_fall">Fall 2010</label>
+														</td>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="available" value="now" id="available_now"<% ($params->{available} && $params->{available} eq 'now')? ' checked="checked"' : '' %>/></span>
+															<label for="available_now">Now</label>
+														</td>
+														<td class="expand-col"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">In:</td>
+										<td>
+											<table>
+												<tbody>
+													<tr>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="city" value="Champaign" id="city_champaign"<% ($params->{city} && $params->{city} eq 'Champaign')? ' checked="checked"' : '' %>/></span>
+															<label for="city_champaign">Champaign</label>
+														</td>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="city" value="Urbana" id="city_urbana"<% ($params->{city} && $params->{city} eq 'Urbana')? ' checked="checked"' : '' %>/></span>
+															<label for="city_urbana">Urbana</label>
+														</td>
+														<td class="expand-col"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">Close to:</td>
+										<td>
+											<table>
+												<tbody>
+													<tr>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="area" value="campus" id="area_campus"<% ($params->{area} && $params->{area} eq 'campus')? ' checked="checked"' : '' %>/></span>
+															<label for="area_campus">Campus</label>
+														</td>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="area" value="bus" id="area_bus"<% ($params->{area} && $params->{area} eq 'bus')? ' checked="checked"' : '' %>/></span>
+															<label for="area_bus">Bus Route</label>
+														</td>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="area" value="school" id="area_school"<% ($params->{area} && $params->{area} eq 'school')? ' checked="checked"' : '' %>/></span>
+															<label for="area_school">Schools / K-12</label>
+														</td>
+														<td class="expand-col"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">Unit type:</td>
+										<td>
+											<table>
+												<tbody>
+													<tr>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="type" value="House" id="type_house"<% ($params->{type} && $params->{type} eq 'House')? ' checked="checked"' : '' %>/></span>
+															<label for="type_house">House</label>
+														</td>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="type" value="Apartment" id="type_apartment"<% ($params->{type} && $params->{type} eq 'Apartment')? ' checked="checked"' : '' %>/></span>
+															<label for="type_apartment">Apartment</label>
+														</td>
+														<td class="option radio">
+															<span class="input"><input type="radio" name="type" value="Storage" id="type_storage"<% ($params->{type} && $params->{type} eq 'Storage')? ' checked="checked"' : '' %>/></span>
+															<label for="type_storage">Storage</label>
+														</td>
+														<td class="expand-col"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">Utilities Included (i.e. Free):</td>
+										<td>
+											<table>
+												<tbody>
+													<tr>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="water" id="water"<% ($params->{water} && $params->{water} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="water">Water</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="gas" id="gas"<% ($params->{gas} && $params->{gas} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="gas">Gas</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="electricity" id="electricity"<% ($params->{electricity} && $params->{electricity} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="electricity">Electricity</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="garbage" id="garbage"<% ($params->{garbage} && $params->{garbage} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="garbage">Garbage</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="recycling" id="recycling"<% ($params->{recycling} && $params->{recycling} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="recycling">Recycling</label>
+														</td>
+														<td class="expand-col"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">Amenities Included (i.e. Free):</td>
+										<td>
+											<table>
+												<tbody>
+													<tr>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="internet" id="internet"<% ($params->{internet} && $params->{internet} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="internet">Internet</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="parking" id="parking"<% ($params->{parking} && $params->{parking} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="parking">Parking spot</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="furnished" id="furnished"<% ($params->{furnished} && $params->{furnished} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="furnished">Furnished</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="dishwasher" id="dishwasher"<% ($params->{dishwasher} && $params->{dishwasher} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="dishwasher">Dishwasher</label>
+														</td>
+														<td class="option checkbox">
+															<span class="input"><input type="checkbox" name="washer_dryer" id="washer_dryer"<% ($params->{washer_dryer} && $params->{washer_dryer} eq 'on')? ' checked="checked"' : '' %>/></span>
+															<label for="washer_dryer">Unit washer &amp; dryer</label>
+														</td>
+														<td class="expand-col"></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<tr class="buttons">
+						<td class="label first"></td>
+						<td class="main-col expand-col right-align">
+							<span class="button"><input class="button" type="reset" value="Clear Filters / Reset" onclick="javascript:reset_filters(); return false;"/></span>
+						</td>
+						<td class="last-col">
+							<span class="button"><input class="button" type="submit" value="Apply Filters / Search"/></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	</form>
+	<p class="clear"></p>
+	<table id="buildings">
+%		for my $name (sort keys %{ $stash->{buildings} }) {
+%			my $building = $c->model('DB::Building')->find({ name => $name }, { cache => 1 });
+%			my $show_building = 1;
+%			$show_building = 0 if $params->{type} && $params->{type} eq 'Apartment' && !$building->units_type_apartment;
+%			$show_building = 0 if $params->{type} && $params->{type} eq 'House' && !$building->units_type_house;
+%			$show_building = 0 if $params->{type} && $params->{type} eq 'Trailer' && !$building->units_type_trailer;
+%			$show_building = 0 if $params->{type} && $params->{type} eq 'Storage' && !$building->units_type_storage;
+%			$show_building = 0 if $params->{available} && $params->{available} eq 'now' && !$building->units_available_now;
+%			$show_building = 0 if $params->{available} && $params->{available} eq 'fall' && !$building->units_available_fall;
+%			$show_building = 0 if $params->{area} && $params->{area} eq 'campus' && !$building->campus_area;
+%			$show_building = 0 if $params->{area} && $params->{area} eq 'school' && !$building->school_area;
+%			$show_building = 0 if $params->{area} && $params->{area} eq 'bus' && !$building->bus_area;
+%			$show_building = 0 if $params->{city} && $params->{city} eq 'Urbana' && !$building->in_urbana;
+%			$show_building = 0 if $params->{city} && $params->{city} eq 'Champaign' && !$building->in_champaign;
+%			$show_building = 0 if $params->{water} && $params->{water} eq 'on' && !$building->units_with_water;
+%			$show_building = 0 if $params->{gas} && $params->{gas} eq 'on' && !$building->units_with_gas;
+%			$show_building = 0 if $params->{electricity} && $params->{electricity} eq 'on' && !$building->units_with_electricity;
+%			$show_building = 0 if $params->{garbage} && $params->{garbage} eq 'on' && !$building->units_with_garbage;
+%			$show_building = 0 if $params->{recycling} && $params->{recycling} eq 'on' && !$building->units_with_recycling;
+%			$show_building = 0 if $params->{internet} && $params->{internet} eq 'on' && !$building->units_with_internet;
+%			$show_building = 0 if $params->{parking} && $params->{parking} eq 'on' && !$building->units_with_parking;
+%			$show_building = 0 if $params->{furnished} && $params->{furnished} eq 'on' && !$building->units_with_furnished;
+%			$show_building = 0 if $params->{dishwasher} && $params->{dishwasher} eq 'on' && !$building->units_with_dishwasher;
+%			$show_building = 0 if $params->{washer_dryer} && $params->{washer_dryer} eq 'on' && !$building->units_with_washer_dryer;
+%			$show_building = 0 if $params->{bedrooms} && $params->{bedrooms} > $building->units_max_bedrooms;
+%			$show_building = 0 if $params->{bathrooms} && $params->{bathrooms} > $building->units_max_bathrooms;
+%			$show_building = 0 if $params->{rent_min} && $params->{rent_min} > $building->units_max_rent;
+%			$show_building = 0 if $params->{rent_max} && $params->{rent_max} < $building->units_min_rent;
+%			if ($show_building) {
+		<tbody id="building_<% $building->building_id %>" class="building">
+			<tr class="header">
+				<td class="building-name" colspan="2">
+					<table>
+						<tbody>
+							<tr>
+								<td class="name"><% $building->name %></td>
+								<td class="map"><div class="col-wrap"><span class="city-text"><% $building->city %></span><a href="#" onclick="javascript:window.open('/map/<% $building->building_id %>','<% $building->name %>','left=100,top=100,width=800,height=500,menubar,resizable,scrollbars'); return false;"><img class="map-icon" src="/static/img/icons/map-36.png" title="<% $building->name %> on Google Maps" alt="<% $building->name %> on Google Maps"/></a></div></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<th class="anomaly"><span class="hack">Available</span></th>
+				<th class="available">
+					<table>
+						<tbody>
+							<tr>
+								<th class="now<% $building->units_available_now? ' on' : ' off' %>"><div class="col-wrap">Now</div></th>
+								<th class="fall<% $building->units_available_fall? ' on' : ' off' %>"><div class="col-wrap">Fall</div></th>
+							</tr>
+						</tbody>
+					</table>
+				</th>
+				<th class="bedrooms"><div class="col-wrap">Beds</div></th>
+				<th class="bathrooms"><div class="col-wrap">Baths</div></th>
+				<th class="rent sort default"><div class="col-wrap">$ Rent / mo.</div></th>
+			</tr>
+%				my $units = $stash->{buildings}->{ $name };
+%				my $units_count = @{ $stash->{buildings}->{ $name } };
+			<tr class="building-picture-tr">
+%				my $rowspan = $units_count + 2;
+%				my $rowspan_filter_adjustment = $rowspan;
+				<td class="building-picture" rowspan="<% $rowspan %>">
+%				if ($building->pictures->first) {
+					<div class="img-shadow">
+%					my @picture = $building->pictures->all;
+%					for (my $i = 0; $i < @picture; $i++) {
+%						my $picture = $picture[$i];
+%						my $filename = $picture->filename;
+%						$filename =~ s/(.+)\.([^.]+)$/$1.w640.$2/;
+						<a<% $i? ' class="hidden"' : '' %> href="/picture/<% $filename %>" rel="pphoto[building_<% $building->building_id %>]">
+%						$filename = $picture->filename;
+%						$filename =~ s/(.+)\.([^.]+)$/$1.w210.$2/;
+							<img src="/picture/<% $filename %>" title="Images for <% $building->name %>" alt="<% $building->name . ($picture->label? ': '. $picture->label : '') %>"/>
+						</a>
+%					}
+					</div>
+%				}
+%				else {
+					<span class="no-photos">No photos yet.</span>
+%				}
+				</td>
+			</tr>
+%				for (my $i = 0; $i < @{ $units }; $i++) {
+%					my $unit = $units->[$i];
+%					my $show_unit = 1;
+%					$show_unit = 0 if $params->{type} && $params->{type} eq 'Apartment' && $unit->type ne 'Apartment';
+%					$show_unit = 0 if $params->{type} && $params->{type} eq 'House' && $unit->type ne 'House';
+%					$show_unit = 0 if $params->{type} && $params->{type} eq 'Trailer' && $unit->type ne 'Trailer';
+%					$show_unit = 0 if $params->{type} && $params->{type} eq 'Storage' && $unit->type ne 'Storage';
+%					$show_unit = 0 if $params->{available} && $params->{available} eq 'now' && !$unit->available_now;
+%					$show_unit = 0 if $params->{available} && $params->{available} eq 'fall' && !$unit->available_fall;
+%					$show_unit = 0 if $params->{water} && $params->{water} eq 'on' && !$unit->water;
+%					$show_unit = 0 if $params->{gas} && $params->{gas} eq 'on' && !$unit->gas;
+%					$show_unit = 0 if $params->{electricity} && $params->{electricity} eq 'on' && !$unit->electricity;
+%					$show_unit = 0 if $params->{garbage} && $params->{garbage} eq 'on' && !$unit->garbage;
+%					$show_unit = 0 if $params->{recycling} && $params->{recycling} eq 'on' && !$unit->recycling;
+%					$show_unit = 0 if $params->{internet} && $params->{internet} eq 'on' && !$unit->internet;
+%					$show_unit = 0 if $params->{parking} && $params->{parking} eq 'on' && (!$unit->parking || $unit->parking ne 'included');
+%					$show_unit = 0 if $params->{furnished} && $params->{furnished} eq 'on' && !$unit->furnished;
+%					$show_unit = 0 if $params->{dishwasher} && $params->{dishwasher} eq 'on' && !$unit->dishwasher;
+%					$show_unit = 0 if $params->{washer_dryer} && $params->{washer_dryer} eq 'on' && !$unit->washer_dryer;
+%					$show_unit = 0 if $params->{bedrooms} && $params->{bedrooms} > $unit->bedrooms;
+%					$show_unit = 0 if $params->{bathrooms} && $params->{bathrooms} > $unit->bathrooms;
+%					$show_unit = 0 if $params->{rent_min} && $params->{rent_min} > $unit->rent_float;
+%					$show_unit = 0 if $params->{rent_max} && $params->{rent_max} < $unit->rent_float;
+%					$rowspan_filter_adjustment-- unless $show_unit;
+%					if ($show_unit) {
+			<tr class="unit">
+%						my $unit_name = $unit->type . (($unit->type eq 'Storage')? '' : ($unit->name? ' '. $unit->name : ''));
+				<td class="unit-name">
+					<span class="name"><% $unit_name %></span>
+					<span class="col-wrap" title="Details on <% $building->name .', '. $unit_name %>">
+						<a rel="unit-details" onclick="javascript:baraka._dialog({ title: $(this).siblings('.title').text(), content: $(this).siblings('.content').html() }); return false;">Details</a>
+						<b class="title hidden"><% $building->name .', '. $unit_name %></b>
+						<div class="content hidden">
+							<p><% $unit->description %></p>
+						</div>
+					</span>
+				</td>
+				<td class="anomaly"><div class="col-wrap"><span class="hack" title="Contact us about <% $building->name .', '. $unit_name %>"><a href="/contact/<% $unit->unit_id %>">E-mail</a></span></div></td>
+				<td class="available">
+					<table>
+						<tbody>
+							<tr>
+								<td class="now <% $unit->available_now? 'on' : 'off' %>"><div class="col-wrap">Now</div></td>
+								<td class="fall <% $unit->available_fall? 'on' : 'off' %>"><div class="col-wrap">Fall</div></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td class="bedrooms">
+%						my $bedrooms = $unit->bedrooms;
+%						$bedrooms =~ s/\.0$//;
+					<% $bedrooms %>
+				</td>
+				<td class="bathrooms">
+%						my $bathrooms = $unit->bathrooms;
+%						$bathrooms =~ s/\.0$//;
+					<% $bathrooms %>
+				</td>
+				<td class="rent sort">
+					<% $unit->rent %>
+				</td>
+			</tr>
+%					}
+%				}
+			<tr>
+				<td colspan="7" class="building-description">
+					<div class="description"><% $building->description %></div>
+					<div class="tags">
+						<strong>Tags:</strong>
+%				my @tags;
+%				push @tags, 'Campus' if $building->campus_area;
+%				push @tags, 'Schools / K-12' if $building->school_area;
+%				push @tags, 'Bus Route' if $building->bus_area;
+%				my $tags = join ', ', @tags;
+						<% $tags %>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="8" class="building-margin"></td>
+			</tr>
+		</tbody>
+%				if ($rowspan_filter_adjustment != $rowspan) {
+		<script type="text/javascript">
+			$(function() {
+				$('#building_<% $building->building_id %>').find('td.building-picture').attr('rowspan', <% $rowspan_filter_adjustment %>);
+			});
+		</script>
+%				}
+%			}
+%		}
+	</table>
+</div>

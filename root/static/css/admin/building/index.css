@@ -1,0 +1,5 @@
+#admin label.big { font-weight: bold; font-size: 130%; }
+#admin label.small { font-weight: bold; font-size: 100%; }
+#admin ul.outside, ul.inside { margin: 3px 5px; padding: 6px; clear: both; }
+#admin > ul { margin-left: 26px; }
+#admin > ul li { display: inline-block; padding-right: 16px; }

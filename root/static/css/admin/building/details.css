@@ -1,0 +1,13 @@
+#details table { }
+#details th, td { padding: 0  0 6px 0; }
+#details th { min-width: 180px; padding-right: 20px; text-align: right; vertical-align: top; }
+#details th span { top: -2px; }
+#details td { }
+#details ul { }
+#details li { display: inline-block; min-width: 162px; }
+#details input[type=text] { width: 543px; }
+#details input[type=submit] { width: 162px; }
+#details textarea {}
+#details label { top: -3px; left: 3px; }
+#details td.map { height: 200px; }
+#map { height: 100%; width: 546px; }

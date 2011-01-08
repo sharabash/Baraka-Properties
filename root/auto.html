@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/pphoto.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui.css"/>
+		<title>Baraka Properties - Apartments in Champaign Urbana on the University of Illinois UIUC campus</title>
+		<script type="text/javascript" src="/static/js/lib/jquery.js"></script>
+		<script type="text/javascript" src="/static/js/lib/jquery.pphoto.js"></script>
+		<script type="text/javascript" src="/static/js/lib/jquery-ui.js"></script>
+		<script type="text/javascript" src="/static/js/main.js"></script>
+%	my $home = $c->config->{home};
+%	my @parts = split /\//, $stash->{template};
+%	my $path = "$home/root/static/css";
+%	for my $part (@parts) {
+%		$part =~ s/\.html$//;
+%		$path .= '/'. $part;
+%		my $file = $path .'.css';
+%		if (-e $file) {
+		<style type='text/css'>
+%			open FILE, $file;
+%			while (<FILE>) {
+%				$_ =~ s/[\r\n]//g;
+			<% $_ %>
+%			}
+%			close FILE;
+		</style>
+%		}
+%	}
+	</head>
+	<body>
+		<div id="dialog" title="Create new user" class="hidden">
+			<p id="validateTips">All form fields are required.</p>
+			<form action="/" method="get">
+				<fieldset>
+					<label for="name">Name</label>
+					<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+					<label for="email">Email</label>
+					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+					<label for="password">Password</label>
+					<input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+				</fieldset>
+			</form>
+		</div>
+		<div id="header">
+			<a href="/" title="Home"><img id="logo" src="/static/img/header.png" alt="Home"/></a>
+			<ul id="navigation" class="navigation">
+				<li<% ($c->namespace eq '' || $c->namespace eq 'nowleasing')? ' class="active"' : '' %>>
+					<a href="/nowleasing">Now Leasing</a>
+				</li>
+				<li<% ($c->namespace eq 'prospective')? ' class="active"' : '' %>>
+					<a href="/prospective">Prospective Tenants</a>
+					<ul class="menu hidden">
+						<li><a href="/static/pdf/sample_lease.pdf">View sample lease (PDF)</a></li>
+						<li><a href="/static/pdf/application.pdf">Submit an application (PDF)</a></li>
+					</ul>
+				</li>
+				<li<% ($c->namespace eq 'contact')? ' class="active"' : '' %>>
+					<a href="/contact">Contact Us</a>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<div id="content-wrap">
+				<div id="content-wrap-wrap">
+% $m->call_next;
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<ul class="navigation">
+% if ($c->user_exists) {
+				<li class="logged-in" style="display: none;">
+					<a class="login-edit" href="/login/edit">Logged in as <% $c->user->name %></a>
+				</li>
+				<li class="logout" style="display: none;">
+					<a class="logout" href="/logout">Logout</a>
+				</li>
+% }
+% else {
+				<li class="register" style="display: none;">
+					<a class="function" href="/register">Register</a>
+				</li>
+				<li class="login" style="display: none;">
+					<a class="login" href="/login">Login</a>
+				</li>
+% }
+			</ul>
+		</div>
+% (my $js_file = $stash->{template}) =~ s/html$/js/;
+% $js_file = "$home/root/static/js/$js_file";
+% if (-e $js_file) {
+%  open FILE, $js_file;
+		<script type='text/javascript'>
+%  while (<FILE>) {
+			<% $_ %>
+%  }
+		</script>
+%  close FILE;
+% }
+	</body>
+</html>
+<%init>
+	$stash = $c->stash;
+	$session = $c->session;
+	$flash = $c->stash->{flash};
+	$params = $c->request->params;
+</%init>

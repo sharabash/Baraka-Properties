@@ -1,0 +1,135 @@
+% my $building = $stash->{building};
+<span class="sep">/</span><h3 class="head">units</h3>
+<p class="clear"></p>
+<div id="units">
+	<form action="/admin/building/<% $building->building_id %>/units/create" method="post">
+		<label>New Unit:</label>
+		<ul>
+			<li>
+				<label for="type" class="lh1">Unit type</label><select name="type">
+					<option value="Apartment" selected="selected">Apartment</option>
+					<option value="House">House</option>
+					<option value="Trailer">Trailer</option>
+					<option value="Storage">Storage</option>
+				</select>
+			</li>
+			<li><label for="name" class="lh1">Unit name</label><input name="name" size="25" maxlength="255" type="text"/></li>
+			<li><input type="submit" value="Create Unit"/></li>
+		</ul>
+	</form>
+%	my $i = 0;
+%	while (my $unit = $stash->{units}->next) {
+%		my $unit_name = $unit->type . (($unit->type eq 'Storage')? '' : ($unit->name? ' '. $unit->name : ''));
+	<form action="/admin/building/<% $building->building_id %>/units/<% $unit->unit_id %>/update" method="post">
+		<ul>
+			<li><% $unit_name %></li>
+<!--
+ type         | type         |
+ name         | text         |
+ leased_now   | boolean      |
+ leased_fall  | boolean      |
+ bedrooms     | integer      | not null default 0
+ bathrooms    | numeric(2,1) | not null default 0.0
+ parking      | parking      |
+ rent         | money        | not null default '$0.00'::money
+-->
+			<li>
+				<ul>
+					<li>
+						<label for="type" class="lh1">Unit type</label><select name="type">
+							<option value="Apartment"<% ($unit->type eq 'Apartment')? ' selected="selected"' : '' %>>Apartment</option>
+							<option value="House"<% ($unit->type eq 'House')? ' selected="selected"' : '' %>>House</option>
+							<option value="Trailer"<% ($unit->type eq 'Trailer')? ' selected="selected"' : '' %>>Trailer</option>
+							<option value="Storage"<% ($unit->type eq 'Storage')? ' selected="selected"' : '' %>>Storage</option>
+						</select>
+					</li>
+					<li><label for="name" class="lh1">Unit name</label><input name="name" type="text" value="<% $unit->name %>"/></li>
+					<li>
+						<label for="leased_now">Leased Now?</label>
+						<input name="leased_now" type="checkbox"<% $unit->leased_now? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="leased_fall">Leased Fall?</label>
+						<input name="leased_fall" type="checkbox"<% $unit->leased_fall? ' checked="checked"' : '' %>/>
+					</li>
+					<li><label for="bedrooms" class="lh1"># Bedrooms</label><input name="bedrooms" type="text" value="<% $unit->bedrooms %>"/></li>
+					<li><label for="bathrooms" class="lh1"># Bathrooms</label><input name="bathrooms" type="text" value="<% $unit->bathrooms %>"/></li>
+					<li>
+						<label for="parking" class="lh1">Parking</label><select name="parking">
+							<option></option>
+							<option value="included"<% ($unit->parking eq 'included')? ' selected="selected"' : '' %>>included</option>
+							<option value="available"<% ($unit->parking eq 'available')? ' selected="selected"' : '' %>>available</option>
+						</select>
+					</li>
+					<li><label for="rent" class="lh1">Rent</label><input name="rent" type="text" value="<% $unit->rent %>"/></li>
+				</ul>
+			</li>
+<!--
+ furnished    | boolean      |
+ dishwasher   | boolean      |
+ garbage      | boolean      |
+ recycling    | boolean      |
+ sewer        | boolean      |
+ water        | boolean      |
+ electricity  | boolean      |
+ gas          | boolean      |
+ internet     | boolean      |
+ washer_dryer | boolean      |
+-->
+			<li>
+				<ul>
+					<li>
+						<label for="furnished">furnished</label>
+						<input name="furnished" type="checkbox"<% $unit->furnished? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="dishwasher">dishwasher</label>
+						<input name="dishwasher" type="checkbox"<% $unit->dishwasher? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="garbage">garbage</label>
+						<input name="garbage" type="checkbox"<% $unit->garbage? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="recycling">recycling</label>
+						<input name="recycling" type="checkbox"<% $unit->recycling? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="sewer">sewer</label>
+						<input name="sewer" type="checkbox"<% $unit->sewer? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="water">water</label>
+						<input name="water" type="checkbox"<% $unit->water? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="electricity">electricity</label>
+						<input name="electricity" type="checkbox"<% $unit->electricity? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="gas">gas</label>
+						<input name="gas" type="checkbox"<% $unit->gas? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="internet">internet</label>
+						<input name="internet" type="checkbox"<% $unit->internet? ' checked="checked"' : '' %>/>
+					</li>
+					<li>
+						<label for="washer_dryer">washer/dryer</label>
+						<input name="washer_dryer" type="checkbox"<% $unit->washer_dryer? ' checked="checked"' : '' %>/>
+					</li>
+				</ul>
+			</li>
+<!--
+ description  | text         |
+-->
+			<li><textarea name="description" rows="5" cols="78"><% $unit->description %></textarea></li>
+			<li><input type="submit" value="Update Unit"/></li>
+%  if ($stash->{is_admin}) {
+			<li style="float: right;"><strong><a href="#" name="delete_building_<% $building->building_id %>_unit_<% $unit->unit_id %>" onclick="javascript:baraka._delete_unit(this); return false;" class="delete unit">Delete Unit</a></strong></li>
+%  }
+		</ul>
+	</form>
+%		$i++;
+%	}
+</div>

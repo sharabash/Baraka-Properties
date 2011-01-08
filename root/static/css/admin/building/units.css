@@ -1,0 +1,7 @@
+#units input[type=text] { width: 70px; }
+#units li { list-style-type: none; display: block; clear: left; }
+label.lh1 {line-height:24px;float:left;width:116px;}
+#units form:nth-child(even) ul {background-color:#eee;padding:0.5em 0 2em 0;clear: both;}
+#units ul { margin: 0.62em; }
+#units li input[type=checkbox] { float: left; margin-right: 0.25em; }
+#units li select, #units li input[type=text] { width: 150px;  float: left; margin-right: 0.25em; }

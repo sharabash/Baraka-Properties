@@ -1,0 +1,10 @@
+#prospective {}
+#prospective > h1 {}
+#prospective > h2 {}
+#prospective .content h2 {}
+#prospective .content { width: 917px; margin: 1.382em auto; }
+#prospective .content p { min-height: 96px; padding: 8px 128px 0px 8px; font-size: 110%; }
+#prospective .content h2 a { text-decoration: none; color: #036; }
+#prospective .content h2 a:hover { text-decoration: underline; }
+#prospective .text-block { margin: 0.618em 0 1.618em; }
+#prospective .text-block img { float: right; top: -8px; }

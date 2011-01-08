@@ -1,0 +1,31 @@
+<p class="clear"></p>
+<form class="application" action="/admin/building/create" method="post">
+	<fieldset class="list">
+		<legend>Buildings</legend>
+		<ul class="outside">
+			<li>
+				<label class="big">New Building:</label>
+				<ul class="inside">
+					<li><input name="name" size="25" maxlength="255" type="text"/></li>
+					<li><input type="submit" value="Create Building"/></li>
+				</ul>
+			</li>
+% my $i = 0;
+% while (my $b = $stash->{buildings}->next) {
+			<li class="building<% ($i%2 == 1)? ' highlight' : '' %>">
+				<label for="building" class="big"><% $b->name %></label>
+				<ul class="inside">
+					<li><label class="small">Update Building:</label></li>
+					<li><a href="/admin/building/<% $b->building_id %>/units">Units</a></li>
+					<li><a href="/admin/building/<% $b->building_id %>/pictures">Pictures</a></li>
+					<li><a href="/admin/building/<% $b->building_id %>/details">Details</a></li>
+%  if ($stash->{is_admin}) {
+					<li style="float: right;"><strong><a href="<% $c->request->uri %>" name="delete_<% $b->building_id %>" onclick="return false;" class="delete building">Delete Building</a></strong></li>
+%  }
+				</ul>
+			</li>
+%  $i++;
+% }
+		</ul>
+	</fieldset>
+</form>

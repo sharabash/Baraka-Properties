@@ -1,0 +1,14 @@
+#admin .sep, #admin .head { margin-bottom: 0 !important; font-size: 20px !important; float: left !important; }
+#admin .sep { padding: 0 5px 0 8px; }
+#admin > span.sep:first-child { padding-left: 0; }
+#admin > p.clear { padding-bottom: 0.5em; }
+#admin > h1 {}
+#admin > h2 {}
+#admin > h3 {}
+
+#admin fieldset { border: 0 none; }
+#admin legend { font-size: 200%; font-weight: bold; }
+#admin li { list-style-type: none; }
+#admin a { text-decoration: none; color: #039; }
+#admin a:hover { cursor: pointer; text-decoration: underline; color: #396; }
+

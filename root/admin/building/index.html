@@ -1,0 +1,11 @@
+% my $building = $stash->{building};
+<p class="clear"></p>
+<ul>
+	<li><label class="small">Update Building:</label></li>
+	<li><a href="/admin/building/<% $building->building_id %>/units">Units</a></li>
+	<li><a href="/admin/building/<% $building->building_id %>/pictures">Pictures</a></li>
+	<li><a href="/admin/building/<% $building->building_id %>/details">Details</a></li>
+%  if ($stash->{is_admin}) {
+	<li style="float: right;"><strong><a href="#" name="delete_<% $building->building_id %>" onclick="return false;" class="delete building">Delete Building</a></strong></li>
+%  }
+</ul>

@@ -1,0 +1,7 @@
+<h1>There was an error with your request</h1>
+<p><% $stash->{error} %></p>
+<% (@{ $c->error })? '<ul>' : '' %>
+% for (@{ $c->error }) {
+	<li><% $_ %></li>
+% }
+<% (@{ $c->error })? '</ul>' : '' %>

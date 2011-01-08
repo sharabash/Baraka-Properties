@@ -1,0 +1,37 @@
+<%flags>
+	inherit => undef
+</%flags>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<title><% $c->stash->{title} %></title>
+		<link rel="stylesheet" type="text/css" href="/static/css/map.css"/>
+		<script type="text/javascript" src="/static/js/lib/jquery.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=ABQIAAAApwGJ1Tx1119kBDIyVW_iTxR0_J8nKKSWpcIFeRyEOxssMGjqDRSZ-h_Bdt64Mp_DiMm1Gu3IRocB9Q"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAApwGJ1Tx1119kBDIyVW_iTxR0_J8nKKSWpcIFeRyEOxssMGjqDRSZ-h_Bdt64Mp_DiMm1Gu3IRocB9Q"></script>
+		<script type="text/javascript">
+			(function(g) {
+				g.load('maps', '2');
+				g.setOnLoadCallback(init);
+
+				function init() {
+				};
+			})(google);
+			$(function() {
+				var map = new GMap2(document.getElementById('map'));
+				var coordinates = new GLatLng(<% $c->stash->{coordinates}->[0] %>,<% $c->stash->{coordinates}->[1] %>);
+				var marker = new GMarker(coordinates, { title: '<% $c->stash->{title} %>' });
+
+				map.setCenter(coordinates, 17);
+				map.addOverlay(marker);
+				map.setUIToDefault();
+			});
+		</script>
+	</head>
+	<body>
+		<div id="map">
+		</div>
+	</body>
+</html>

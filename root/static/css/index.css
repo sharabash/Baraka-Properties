@@ -1,0 +1,51 @@
+/* vim: set ts=2 sw=2 expandtab */
+* { position: relative; z-index: 0; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; }
+body { font-family: sans-serif; font-size: small; color: black; position: static;
+       background: #46583D url(../img/headerbg.png) repeat-x scroll 0 0; overflow-x: hidden; }
+table { border-collapse: collapse; }
+tr { height: 100%; }
+
+.clear { clear: both; margin: 1em; }
+.hidden { display: none !important; }
+
+#header { height:97px; width: 990px; background: url(../img/headerbg-fixed.png) repeat;
+          z-index: 1; margin: 13px auto; margin-bottom: 0; }
+
+#header #logo,
+#header ul.navigation li { display: inline-block; float: left; border: 0; }
+
+#header ul.navigation { position: absolute; right: 0.0em; bottom: 8px;
+              height: 22px; float: right !important; border-right: 1px solid #617356; }
+#header ul.navigation li { margin-right: 1em; height: 100%;
+                 border-left: 1px solid #617356; padding-left: 1em; }
+#header ul.navigation li:first-child { padding-right: 1em !important;
+                             margin-right: 0em !important; }
+#header ul.navigation a { font-family: Trebuchet MS, sans-serif; font-weight: bold;
+                  color: LightCyan; text-decoration: none;
+                  text-shadow: -1px 1px 2px #234; }
+#header ul.navigation li.active a { color: Gold; }
+#header ul.navigation a { font-size: 18px; }
+#footer ul.navigation a { font-size: 1.2em; }
+#header ul.navigation a:hover { color: Ivory; text-decoration: none;  }
+#header ul.navigation a:active { color: GreenYellow; }
+
+#content { width: 100%; background: #83917B url(../img/contentbg.png) repeat-y scroll center center; font-size: 92.8%; }
+#content-wrap { z-index: 2; margin: 0 auto; width: 990px; color: #123;
+           border-left: 1px solid #352; border-right: 1px solid #352; background-color: white; }
+#content-wrap-wrap { padding: 1em 2em; }
+#content-wrap-wrap > div > h1 { float: left; margin-bottom: 0.618em; }
+#content-wrap-wrap > div > h2 { float: right; }
+#content h1 { font-size: 2em; }
+#content h2 { font-size: 17px; }
+
+#footer { opacity: 0.75; background-color: #617257; color: white;
+          z-index: 1; width: 100%; height: 2em; border-top: 1px solid black; 
+          border-bottom: 1px solid black; overflow-y: hidden; margin-bottom: 50px; }
+#footer li { }
+#footer li a.function { float: right !important; }
+#footer ul.navigation { background-color: #394D31; width: 990px; margin: 0 auto; height: 2em; overflow: hidden;
+                        border-left: 1px solid black; border-right: 1px solid black; }
+#footer ul.navigation li { border-left: 1px solid black; display: inline; text-align: right; overflow: hidden;
+                           float: right; height: 100%; padding: 0.2em 1em 0; }
+#footer ul.navigation a { color: white; opacity: 0.75; }

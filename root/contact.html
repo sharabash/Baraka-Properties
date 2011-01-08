@@ -1,0 +1,58 @@
+<div id="contact">
+	<h1>Contact Us</h1>
+	<h2>&nbsp;</h2>
+	<p class="clear"></p>
+	<div class="content">
+		<form method="post" action="/contact/submit">
+			<fieldset>
+				<label class="field-first required">
+					<span>First name <em>*</em></span>
+					<input type="text" name="first"<% $session->{first}? ' value="'. $session->{first} .'"' : '' %>/>
+				</label>
+				<label class="field-last required">
+					<span>Last name <em>*</em></span>
+					<input type="text" name="last"<% $session->{last}? ' value="'. $session->{last} .'"' : '' %>/>
+				</label>
+				<label class="field-email required">
+					<span>Email address <em>*</em></span>
+					<input type="text" name="email"<% $session->{email}? ' value="'. $session->{email} .'"' : '' %>/>
+				</label>
+				<label class="field-phone">
+					<span>Phone number</span>
+					<input type="text" name="phone"<% $session->{phone}? ' value="'. $session->{phone} .'"' : '' %>/>
+				</label>
+				<label class="field-subject">
+					<span>Subject</span>
+					<input type="text" name="subject"<% $stash->{subject}? ' value="'. $stash->{subject} .'"' : '' %>/>
+				</label>
+				<label class="field-message required">
+					<span>Message</span>
+					<textarea rows="5" cols="70" name="message"><% $stash->{message}? $stash->{message} : '' %></textarea>
+				</label>
+				<label class="field-submit">
+					<input type="submit" value="Contact Us"/>
+				</label>
+			</fieldset>
+		</form>
+% if ($stash->{response}) {
+		<div id="response">
+%  my $reply = shift @{$stash->{response}};
+			<p><% $reply %></p>
+%  if (@{$stash->{response}}) {
+			<ul>
+%   for my $response (@{$stash->{response}}) {
+				<li><% $response %></li>
+%   }
+			</ul>
+%  }
+		</div>
+% }
+	</div>
+</div>
+% if ($stash->{success}) {
+<script type="text/javascript">
+	setTimeout(function() {
+		location.href = '/';
+	}, 3000);
+</script>
+% }
